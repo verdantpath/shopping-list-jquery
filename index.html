@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>Shopping List</title>
-<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
 <style>
 .container {
@@ -19,52 +19,7 @@ ul li {
     list-style-type: none;
 }
 </style>
-<script>
-$(document).ready(function() {
-    /**
-     * Add button click handler
-     */
-    function onAdd() {
-        var $ul, li, $li, $label, $div, value;
 
-        value = $('.js-new-item').val();
-        //validate against empty values
-        if(value === '') {
-            return;
-        }
-        $ul = $('ul');
-        $li = $('<li>').appendTo($ul);
-        $div = $('<div>')
-            .addClass('checkbox')
-            .appendTo($li);
-        $label = $('<label>').appendTo($div);
-        $('<input>')
-            .attr('type', 'checkbox')
-            .addClass('item')
-            .attr('name', 'list')
-            .click(toggleRemoved)
-            .appendTo($label);
-        $label
-            .append(value);
-        $('.js-new-item').val('');
-    }
-
-    /**
-     * checkbox click handler =
-     * toggles class removed on li parent element
-     * @param ev
-     */
-    function toggleRemoved(ev) {
-        var $el;
-
-        $el = $(ev.currentTarget);
-        $el.closest('li').toggleClass('removed');
-    }
-
-    $('.js-add').click(onAdd);
-    $('.js-item').click(toggleRemoved);
-});
-</script>
 </head>
 <body>
 <div class="container">
@@ -98,8 +53,63 @@ $(document).ready(function() {
             </div>
         </li>
     </ul>
+    <div class="footer">
+        <hr />
+        <em>Change the title of your shopping list here</em>
+        <input class="js-change-title" type="text" value="My Shopping List" />
+    </div>
 </div>
 <!-- /container-->
+<script>
+    $(document).ready(function () {
+        /**
+         * Add button click handler
+         */
+        function onAdd() {
+            var $ul, li, $li, $label, $div, value;
 
+            value = $('.js-new-item').val();
+            //validate against empty values
+            if (value === '') {
+                return;
+            }
+            $ul = $('ul');
+            $li = $('<li>').appendTo($ul);
+            $div = $('<div>')
+                .addClass('checkbox')
+                .appendTo($li);
+            $label = $('<label>').appendTo($div);
+            $('<input>')
+                .attr('type', 'checkbox')
+                .addClass('item')
+                .attr('name', 'list')
+                .click(toggleRemoved)
+                .appendTo($label);
+            $label
+                .append(value);
+            $('.js-new-item').val('');
+        }
+
+        /**
+         * checkbox click handler =
+         * toggles class removed on li parent element
+         * @param ev
+         */
+        function toggleRemoved(ev) {
+            var $el;
+
+            $el = $(ev.currentTarget);
+            $el.closest('li').toggleClass('removed');
+        }
+
+        $('.js-add').click(onAdd);
+        $('.js-item').click(toggleRemoved);
+
+        function onChangeTitle() {
+            $('h2').text($('.js-change-title').val());
+        };
+        $('.js-change-title').keyup(onChangeTitle);
+    });
+</script>
 </body>
 </html> 
